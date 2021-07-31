@@ -1,0 +1,16 @@
+---
+# vars file for ansible_galaxy_role_customize_shell_prompt
+
+customize:
+  file:
+    name: customize_shell_ps
+    dest_path: /etc/customize_shell_ps
+
+shell:
+  rc:
+    file:
+      path: $HOME/.bashrc
+    root:
+      user:
+        file:
+          path: /root/.bashrc

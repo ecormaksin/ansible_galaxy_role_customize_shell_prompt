@@ -1,0 +1,29 @@
+function ps1_ls() {
+    [[ $_PWD == $PWD ]] || { _PWD=$PWD; ls; }
+}
+
+function ps1_newline() {
+    if [[ -z "${PS1_NEWLINE_LOGIN}" ]]; then
+        PS1_NEWLINE_LOGIN=true
+    else
+        printf '\n'
+    fi
+}
+
+function ps1_customize() {
+    ps1_ls
+    ps1_newline
+}
+
+function ps1_git_branch() {
+    git symbolic-ref HEAD 2>/dev/null >/dev/null &&
+    echo "($(git symbolic-ref HEAD 2>/dev/null | sed 's/^refs\/heads\///'))"
+}
+
+PROMPT_COMMAND=ps1_customize
+
+if [ -n "$ps1_git_branch"]; then
+    PS1_GIT_BRANCH='\[\e[1;33m\]$(ps1_git_branch "(%s)")\[\e[0m\]'
+else
+    PS1_GIT_BRANCH=
+fi
